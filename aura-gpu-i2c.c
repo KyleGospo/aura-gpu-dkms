@@ -108,7 +108,7 @@ static error_t open_engine (
 ){
     struct aura_reg_service *reg;
 
-    if (IS_NULL(context))
+    if (IS_ERR_OR_NULL(context))
         return -EINVAL;
 
     mutex_lock(&context->mutex);
@@ -516,7 +516,7 @@ static int aura_gpu_i2c_xfer (
     bool mot, result = true;
     int i;
 
-    if (IS_NULL(context))
+    if (IS_ERR_OR_NULL(context))
         return -EIO;
 
     open_engine(context);
@@ -667,7 +667,7 @@ void gpu_adapter_destroy (
 ){
     struct aura_i2c_context *context = context_from_adapter(i2c_adapter);
 
-    if (IS_NULL(i2c_adapter))
+    if (IS_ERR_OR_NULL(i2c_adapter))
         return;
 
     i2c_del_adapter(&context->i2c_adapter);
@@ -709,7 +709,7 @@ int gpu_adapters_create (
     error_t err;
     int found;
 
-    if (IS_NULL(i2c_adapters) || IS_FALSE(count == 2))
+    if (IS_ERR_OR_NULL(i2c_adapters) || (count != 2))
         return -EINVAL;
 
     /* Handle the case of mixed GPU types */

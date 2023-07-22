@@ -471,7 +471,7 @@ void aura_i2c_bios_destroy (
 ){
     struct hw_i2c_context *context = context_from_adapter(i2c_adapter);
 
-    if (IS_NULL(i2c_adapter))
+    if (IS_ERR_OR_NULL(i2c_adapter))
         return;
 
     aura_gpu_i2c_destroy(context);
